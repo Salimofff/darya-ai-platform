@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Железо · GPU-стойки</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .kpi-lg{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.02em;}
+  .gauge-track{width:100%;height:8px;border-radius:99px;background:rgba(120,150,220,.14);overflow:hidden;}
+  .gauge-fill{height:100%;border-radius:99px;}
+  .bar-mini{display:inline-block;height:6px;border-radius:99px;background:var(--brand);vertical-align:middle;}
+  .temp-ok{color:var(--success);} .temp-warn{color:var(--warning);} .temp-crit{color:var(--danger);}
+  .node-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;}
+  .node-card.warn{border-color:rgba(251,191,36,.4);}
+  .g8{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:12px;}
+  .g8 i{aspect-ratio:1;border-radius:4px;display:grid;place-items:center;font-size:9px;color:rgba(255,255,255,.7);font-family:var(--mono);}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="console">
+  <aside class="side">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="grp">Центр управления</div>
+    <a href="admin-overview.html">▸ Обзор ДЦ</a>
+    <a href="admin-hardware.html" class="active">▸ Железо · GPU-стойки</a>
+    <a href="admin-clients.html">▸ Клиенты · Аренды · Биллинг</a>
+    <a href="admin-infra.html">▸ Сеть · Энергия · Охлаждение</a>
+    <a href="admin-ops.html">▸ Операции · Алерты · SLA <span class="cnt">3</span></a>
+    <div class="grp">Клиентская платформа</div>
+    <a href="console.html">▸ Консоль клиента</a>
+    <a href="configurator.html">▸ Конфигуратор</a>
+    <a href="index.html">▸ Сайт · Тарифы</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><span class="eyebrow">Инфраструктура</span><h1 class="h2 mt8">Железо · GPU-стойки</h1></div>
+      <div class="flex items-center gap16">
+        <span class="chip"><span class="dot-live"></span> 16/16 узлов онлайн</span>
+        <button class="btn btn-ghost btn-sm">Экспорт CSV</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="grid g4 mb24">
+      <div class="card"><div class="muted" style="font-size:13px;">Всего GPU</div><div class="kpi-lg" style="color:#fff;">128</div><span class="muted mt8" style="font-size:12px;display:block;">NVIDIA H200 SXM5 · 141 ГБ</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">В работе</div><div class="kpi-lg" style="color:var(--brand-hi);">100</div><span class="badge ok mt8">78% загрузка</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Средняя темп.</div><div class="kpi-lg temp-ok">64°C</div><span class="muted mt8" style="font-size:12px;display:block;">макс. 79°C (node-07)</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Здоровье узлов</div><div class="kpi-lg" style="color:var(--success);">15<span style="font-size:16px;color:var(--text-3);">/16 OK</span></div><span class="badge warn mt8">1 требует внимания</span></div>
+    </div>
+
+    <!-- Servers table -->
+    <div class="card mb24">
+      <div class="flex items-center justify-between mb16"><h3 class="h3">Серверы · Supermicro SYS-821GE-TNHR</h3><input class="input search" placeholder="Поиск узла…"></div>
+      <table class="tbl">
+        <thead><tr><th>Узел</th><th>GPU</th><th>Загрузка</th><th>Темп.</th><th>Питание</th><th>Аптайм</th><th>Статус</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <!-- Node detail cards -->
+    <h3 class="h3 mb16">Детализация по узлам (GPU 0–7)</h3>
+    <div class="grid g4">
+      <div class="node-card"><div class="flex justify-between items-center"><span class="mono strong" style="color:#fff;">node-01</span><span class="badge ok">OK</span></div><div class="muted" style="font-size:12px;margin-top:4px;">клиент: darya-train-01</div><div class="g8" id="n1"></div></div>
+      <div class="node-card"><div class="flex justify-between items-center"><span class="mono strong" style="color:#fff;">node-04</span><span class="badge ok">OK</span></div><div class="muted" style="font-size:12px;margin-top:4px;">клиент: Академия наук</div><div class="g8" id="n2"></div></div>
+      <div class="node-card warn"><div class="flex justify-between items-center"><span class="mono strong" style="color:#fff;">node-07</span><span class="badge warn">79°C</span></div><div class="muted" style="font-size:12px;margin-top:4px;">клиент: ТаджикТелеком</div><div class="g8" id="n3"></div></div>
+      <div class="node-card"><div class="flex justify-between items-center"><span class="mono strong" style="color:#fff;">node-12</span><span class="badge off">резерв</span></div><div class="muted" style="font-size:12px;margin-top:4px;">свободен · готов к аренде</div><div class="g8" id="n4"></div></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const nodes=[
+  ['node-01',8,96,66,'5.6 кВт','42д','ok'],
+  ['node-02',8,88,62,'5.2 кВт','42д','ok'],
+  ['node-03',8,74,60,'4.8 кВт','30д','ok'],
+  ['node-04',8,100,71,'6.1 кВт','18д','ok'],
+  ['node-05',8,52,55,'3.9 кВт','42д','ok'],
+  ['node-06',8,81,64,'5.3 кВт','42д','ok'],
+  ['node-07',8,98,79,'6.2 кВт','7д','warn'],
+  ['node-08',8,60,58,'4.4 кВт','25д','ok'],
+  ['node-12',0,0,38,'0.4 кВт','42д','off'],
+];
+function tempClass(t){return t>=78?'temp-warn':t>=85?'temp-crit':'temp-ok';}
+document.getElementById('rows').innerHTML = nodes.map(n=>{
+  const [name,gpu,load,temp,pw,up,st]=n;
+  const badge = st==='ok'?'<span class="badge ok"><span class="dot-live"></span> Running</span>':
+                st==='warn'?'<span class="badge warn">Внимание</span>':
+                '<span class="badge off">Резерв</span>';
+  const gaugeColor = load>=90?'#FBBF24':'#2D7EF8';
+  return `<tr>
+    <td class="strong mono">${name}</td>
+    <td class="mono">${gpu}× H200</td>
+    <td style="min-width:120px;"><div class="gauge-track"><div class="gauge-fill" style="width:${load}%;background:${gaugeColor};"></div></div><span class="muted mono" style="font-size:11px;">${load}%</span></td>
+    <td class="mono ${tempClass(temp)}">${temp}°C</td>
+    <td class="mono">${pw}</td>
+    <td class="mono muted">${up}</td>
+    <td>${badge}</td>
+  </tr>`;
+}).join('');
+
+// GPU mini-grids per node card
+function gpuGrid(id,pattern){
+  const el=document.getElementById(id); if(!el) return;
+  const colors={r:'#34D399',w:'#FBBF24',f:'rgba(120,150,220,.2)'};
+  el.innerHTML = pattern.map((p,i)=>`<i style="background:${colors[p]};">${i}</i>`).join('');
+}
+gpuGrid('n1',['r','r','r','r','r','r','r','r']);
+gpuGrid('n2',['r','r','r','r','r','r','r','r']);
+gpuGrid('n3',['r','r','r','r','r','r','w','r']);
+gpuGrid('n4',['f','f','f','f','f','f','f','f']);
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

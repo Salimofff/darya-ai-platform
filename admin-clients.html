@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Клиенты · Аренды · Биллинг</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .kpi-lg{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.02em;}
+  .delta-up{color:var(--success);font-size:13px;font-weight:600;}
+  .bars{display:flex;align-items:flex-end;gap:14px;height:150px;padding-top:10px;}
+  .bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .bars .bar{width:70%;border-radius:6px 6px 0 0;background:var(--brand);}
+  .bars .lbl{font-size:11px;color:var(--text-3);}
+  .plan-tag{padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;}
+  .p-off{background:rgba(52,211,153,.14);color:var(--success);}
+  .p-res{background:rgba(45,126,248,.14);color:var(--brand-hi);}
+  .p-od{background:rgba(255,255,255,.06);color:var(--text-2);}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="console">
+  <aside class="side">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="grp">Центр управления</div>
+    <a href="admin-overview.html">▸ Обзор ДЦ</a>
+    <a href="admin-hardware.html">▸ Железо · GPU-стойки</a>
+    <a href="admin-clients.html" class="active">▸ Клиенты · Аренды · Биллинг</a>
+    <a href="admin-infra.html">▸ Сеть · Энергия · Охлаждение</a>
+    <a href="admin-ops.html">▸ Операции · Алерты · SLA <span class="cnt">3</span></a>
+    <div class="grp">Клиентская платформа</div>
+    <a href="console.html">▸ Консоль клиента</a>
+    <a href="configurator.html">▸ Конфигуратор</a>
+    <a href="index.html">▸ Сайт · Тарифы</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><span class="eyebrow">Коммерция</span><h1 class="h2 mt8">Клиенты · Аренды · Биллинг</h1></div>
+      <div class="flex items-center gap16">
+        <span class="chip"><span class="dot-live"></span> 7 активных клиентов</span>
+        <button class="btn btn-primary btn-sm">＋ Новая аренда</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="grid g4 mb24">
+      <div class="card"><div class="muted" style="font-size:13px;">Выручка (MRR)</div><div class="kpi-lg" style="color:var(--success);">$247K</div><div class="mt8"><span class="delta-up">▲ +12%</span> <span class="muted" style="font-size:12px;">к июню</span></div></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Активные аренды</div><div class="kpi-lg" style="color:#fff;">11</div><span class="muted mt8" style="font-size:12px;display:block;">100 GPU задействовано</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Ср. чек / клиент</div><div class="kpi-lg" style="color:var(--brand-hi);">$35.3K</div><span class="muted mt8" style="font-size:12px;display:block;">/ мес</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Дебиторка</div><div class="kpi-lg" style="color:var(--warning);">$8.4K</div><span class="badge warn mt8">2 счёта просрочены</span></div>
+    </div>
+
+    <!-- revenue by client + plan mix -->
+    <div class="grid mb24" style="grid-template-columns:1.7fr 1fr;align-items:start;">
+      <div class="card">
+        <div class="flex items-center justify-between mb16"><h3 class="h3">Выручка по клиентам · июль ($ тыс.)</h3></div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="card">
+        <h3 class="h3 mb16">Структура по тарифам</h3>
+        <div style="display:grid;gap:16px;">
+          <div><div class="flex justify-between" style="font-size:14px;"><span class="muted">Offtake (1–3 года)</span><span class="mono" style="color:#fff;">$168K · 68%</span></div><div style="height:8px;border-radius:99px;background:rgba(120,150,220,.14);margin-top:6px;"><div style="width:68%;height:100%;border-radius:99px;background:var(--success);"></div></div></div>
+          <div><div class="flex justify-between" style="font-size:14px;"><span class="muted">Reserved (1–12 мес)</span><span class="mono" style="color:#fff;">$59K · 24%</span></div><div style="height:8px;border-radius:99px;background:rgba(120,150,220,.14);margin-top:6px;"><div style="width:24%;height:100%;border-radius:99px;background:var(--brand);"></div></div></div>
+          <div><div class="flex justify-between" style="font-size:14px;"><span class="muted">On-Demand</span><span class="mono" style="color:#fff;">$20K · 8%</span></div><div style="height:8px;border-radius:99px;background:rgba(120,150,220,.14);margin-top:6px;"><div style="width:8%;height:100%;border-radius:99px;background:var(--text-3);"></div></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex justify-between" style="font-size:14px;"><span class="muted">Валовая маржа</span><span class="mono" style="color:var(--success);">71%</span></div>
+      </div>
+    </div>
+
+    <!-- Clients / rentals table -->
+    <div class="card mb24">
+      <div class="flex items-center justify-between mb16"><h3 class="h3">Клиенты и активные аренды</h3><input class="input search" placeholder="Поиск клиента…"></div>
+      <table class="tbl">
+        <thead><tr><th>Клиент</th><th>GPU</th><th>Тариф</th><th>Ставка</th><th>Договор до</th><th>$/мес</th><th>KYB</th><th>Оплата</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <!-- Invoices -->
+    <div class="card">
+      <div class="flex items-center justify-between mb16"><h3 class="h3">Счета</h3><button class="btn btn-ghost btn-sm">Все счета</button></div>
+      <table class="tbl">
+        <thead><tr><th>Счёт</th><th>Клиент</th><th>Сумма</th><th>Выставлен</th><th>Статус</th></tr></thead>
+        <tbody id="inv"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script>
+// Revenue bars
+const rev=[['Академия наук',72],['ТаджикТелеком',58],['МинЦифра',41],['Barakat AI',34],['EBRD-проект',26],['Прочие',16]];
+const maxv=Math.max(...rev.map(r=>r[1]));
+document.getElementById('bars').innerHTML = rev.map(([n,v])=>{
+  const h=Math.round(v/maxv*120);
+  return `<div class="col"><span class="mono muted" style="font-size:11px;">$${v}K</span><div class="bar" style="height:${h}px;"></div><span class="lbl">${n}</span></div>`;
+}).join('');
+
+// Clients table
+const clients=[
+  ['Академия наук РТ','8× H200','off','$3.50','дек 2027','$20 440','✓','ok'],
+  ['ТаджикТелеком','4× H200','off','$3.50','июн 2027','$10 220','✓','ok'],
+  ['МинЦифра РТ','16× H200','off','$3.50','мар 2028','$40 880','✓','ok'],
+  ['Barakat AI','8× H200','res','$4.20','сен 2026','$24 528','✓','ok'],
+  ['EBRD пилот','4× H200','res','$4.20','ноя 2026','$12 264','✓','warn'],
+  ['Startup Lab','2× H200','od','$4.80','—','~$7 000','—','ok'],
+];
+const planTag={off:'<span class="plan-tag p-off">Offtake</span>',res:'<span class="plan-tag p-res">Reserved</span>',od:'<span class="plan-tag p-od">On-Demand</span>'};
+document.getElementById('rows').innerHTML = clients.map(c=>{
+  const [name,gpu,plan,rate,until,mo,kyb,pay]=c;
+  const payBadge = pay==='ok'?'<span class="badge ok">Оплачено</span>':'<span class="badge warn">Просрочено</span>';
+  const kybBadge = kyb==='✓'?'<span style="color:var(--success);">✓</span>':'<span class="muted">—</span>';
+  return `<tr>
+    <td class="strong">${name}</td>
+    <td class="mono">${gpu}</td>
+    <td>${planTag[plan]}</td>
+    <td class="mono">${rate}</td>
+    <td class="mono muted">${until}</td>
+    <td class="mono" style="color:#fff;">${mo}</td>
+    <td class="center">${kybBadge}</td>
+    <td>${payBadge}</td>
+  </tr>`;
+}).join('');
+
+// Invoices
+const inv=[
+  ['INV-2026-0714','Академия наук РТ','$20 440','01 июл','ok'],
+  ['INV-2026-0715','ТаджикТелеком','$10 220','01 июл','ok'],
+  ['INV-2026-0716','МинЦифра РТ','$40 880','01 июл','ok'],
+  ['INV-2026-0709','EBRD пилот','$4 200','20 июн','warn'],
+  ['INV-2026-0703','EBRD пилот','$4 200','01 июн','warn'],
+];
+document.getElementById('inv').innerHTML = inv.map(i=>{
+  const [id,cl,amt,dt,st]=i;
+  const badge = st==='ok'?'<span class="badge ok">Оплачен</span>':'<span class="badge warn">Просрочен</span>';
+  return `<tr><td class="strong mono">${id}</td><td>${cl}</td><td class="mono" style="color:#fff;">${amt}</td><td class="mono muted">${dt}</td><td>${badge}</td></tr>`;
+}).join('');
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

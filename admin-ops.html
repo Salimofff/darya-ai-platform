@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Операции · Алерты · SLA</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .kpi-lg{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.02em;}
+  .delta-up{color:var(--success);font-size:13px;font-weight:600;}
+  .alert-row{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .alert-row:last-child{border-bottom:none;}
+  .a-dot{width:10px;height:10px;border-radius:99px;margin-top:5px;flex:none;}
+  .a-crit{background:var(--danger);}
+  .a-warn{background:var(--warning);}
+  .a-info{background:var(--brand-hi);}
+  .a-ok{background:var(--success);}
+  .sla-ring{display:flex;align-items:center;gap:20px;}
+  .sla-num{font-size:clamp(34px,4vw,52px);font-weight:800;letter-spacing:-.02em;color:var(--success);}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding-top:14px;}
+  .bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .bars .bar{width:60%;border-radius:5px 5px 0 0;background:var(--success);}
+  .bars .lbl{font-size:10px;color:var(--text-3);}
+  .prio{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;}
+  .pr-h{background:rgba(248,113,113,.15);color:var(--danger);}
+  .pr-m{background:rgba(251,191,36,.15);color:var(--warning);}
+  .pr-l{background:rgba(255,255,255,.06);color:var(--text-2);}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="console">
+  <aside class="side">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="grp">Центр управления</div>
+    <a href="admin-overview.html">▸ Обзор ДЦ</a>
+    <a href="admin-hardware.html">▸ Железо · GPU-стойки</a>
+    <a href="admin-clients.html">▸ Клиенты · Аренды · Биллинг</a>
+    <a href="admin-infra.html">▸ Сеть · Энергия · Охлаждение</a>
+    <a href="admin-ops.html" class="active">▸ Операции · Алерты · SLA <span class="cnt">3</span></a>
+    <div class="grp">Клиентская платформа</div>
+    <a href="console.html">▸ Консоль клиента</a>
+    <a href="configurator.html">▸ Конфигуратор</a>
+    <a href="index.html">▸ Сайт · Тарифы</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><span class="eyebrow">Эксплуатация (NOC)</span><h1 class="h2 mt8">Операции · Алерты · SLA</h1></div>
+      <div class="flex items-center gap16">
+        <span class="chip"><span class="dot-live"></span> NOC 24/7 · дежурная смена</span>
+        <button class="btn btn-primary btn-sm">＋ Создать заявку</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="grid g4 mb24">
+      <div class="card"><div class="muted" style="font-size:13px;">Доступность (SLA факт)</div><div class="kpi-lg" style="color:var(--success);">99.94%</div><span class="muted mt8" style="font-size:12px;display:block;">цель 99–95%</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Активные алерты</div><div class="kpi-lg" style="color:var(--warning);">3</div><span class="muted mt8" style="font-size:12px;display:block;">1 крит. · 2 предупр.</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Открытые заявки</div><div class="kpi-lg" style="color:#fff;">5</div><span class="muted mt8" style="font-size:12px;display:block;">ср. время ответа 12 мин</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Инцидентов за 30 дн.</div><div class="kpi-lg" style="color:var(--brand-hi);">2</div><span class="muted mt8" style="font-size:12px;display:block;">оба устранены</span></div>
+    </div>
+
+    <!-- SLA compliance + uptime bars -->
+    <div class="grid mb24" style="grid-template-columns:1fr 1.7fr;align-items:start;">
+      <div class="card">
+        <h3 class="h3 mb16">Соответствие SLA · месяц</h3>
+        <div class="sla-ring">
+          <div class="sla-num">99.94%</div>
+          <div>
+            <div class="muted" style="font-size:13px;">Downtime за месяц</div>
+            <div class="mono" style="color:#fff;font-size:15px;">26 мин</div>
+            <div class="muted mt8" style="font-size:13px;">Кредит-риск</div>
+            <div class="mono" style="color:var(--success);font-size:15px;">нет</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex justify-between" style="font-size:14px;"><span class="muted">Целевой диапазон</span><span class="mono" style="color:#fff;">99–95%</span></div>
+        <div class="flex justify-between mt8" style="font-size:14px;"><span class="muted">Запас над нижней границей</span><span class="mono" style="color:var(--success);">+4.94 п.п.</span></div>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between mb24"><h3 class="h3">Uptime по дням (%)</h3><span class="chip">последние 14 дней</span></div>
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+
+    <!-- Active alerts + Maintenance -->
+    <div class="grid mb24" style="grid-template-columns:1fr 1fr;align-items:start;">
+      <div class="card">
+        <h3 class="h3 mb16">Активные алерты</h3>
+        <div class="alert-row"><span class="a-dot a-warn"></span><div style="flex:1;"><div class="strong">Rack B2 · повышенная температура выхода 35.2 °C</div><div class="muted" style="font-size:12px;">порог 34 °C · 8 мин назад · назначено: дежурный инженер</div></div><span class="badge warn">Предупр.</span></div>
+        <div class="alert-row"><span class="a-dot a-warn"></span><div style="flex:1;"><div class="strong">EBRD пилот · счёт INV-2026-0709 просрочен</div><div class="muted" style="font-size:12px;">биллинг · 12 дней · эскалация коммерции</div></div><span class="badge warn">Предупр.</span></div>
+        <div class="alert-row"><span class="a-dot a-info"></span><div style="flex:1;"><div class="strong">node-07 · утилизация GPU 96% (устойчиво)</div><div class="muted" style="font-size:12px;">информ. · авто-нормализация · без действий</div></div><span class="badge info">Инфо</span></div>
+      </div>
+      <div class="card">
+        <h3 class="h3 mb16">Плановое обслуживание</h3>
+        <div class="alert-row"><span class="a-dot a-info"></span><div style="flex:1;"><div class="strong">Обновление драйверов NVIDIA · fabric</div><div class="muted" style="font-size:12px;">06 июл · 02:00–04:00 · окно вне SLA</div></div><span class="badge info">Запланир.</span></div>
+        <div class="alert-row"><span class="a-dot a-info"></span><div style="flex:1;"><div class="strong">Профилактика чиллеров (зал)</div><div class="muted" style="font-size:12px;">12 июл · без остановки нагрузки</div></div><span class="badge info">Запланир.</span></div>
+        <div class="alert-row"><span class="a-dot a-ok"></span><div style="flex:1;"><div class="strong">Тест переключения на резервный аплинк</div><div class="muted" style="font-size:12px;">28 июн · выполнено · 0 downtime</div></div><span class="badge ok">Готово</span></div>
+      </div>
+    </div>
+
+    <!-- Support tickets -->
+    <div class="card mb24">
+      <div class="flex items-center justify-between mb16"><h3 class="h3">Заявки поддержки</h3><input class="input search" placeholder="Поиск заявки…"></div>
+      <table class="tbl">
+        <thead><tr><th>№</th><th>Клиент</th><th>Тема</th><th>Приоритет</th><th>Создана</th><th>Статус</th></tr></thead>
+        <tbody id="tickets"></tbody>
+      </table>
+    </div>
+
+    <!-- Incident log -->
+    <div class="card">
+      <h3 class="h3 mb16">Журнал инцидентов (30 дней)</h3>
+      <table class="tbl">
+        <thead><tr><th>Дата</th><th>Инцидент</th><th>Длит.</th><th>Влияние</th><th>Статус</th></tr></thead>
+        <tbody id="incidents"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script>
+// Uptime bars (14 days)
+const up=[100,100,99.9,100,100,100,99.8,100,100,100,100,99.95,100,100];
+document.getElementById('bars').innerHTML = up.map((v,i)=>{
+  // scale 99.7..100 to visible range
+  const h=Math.round(((v-99.7)/0.3)*90)+30;
+  const col = v<99.9?'background:var(--warning);':'background:var(--success);';
+  return `<div class="col"><span class="mono muted" style="font-size:9px;">${v}</span><div class="bar" style="height:${h}px;${col}"></div><span class="lbl">${i+1}</span></div>`;
+}).join('');
+
+// Support tickets
+const tickets=[
+  ['#T-482','Академия наук РТ','Запрос увеличения квоты до 12 GPU','m','2 ч назад','open'],
+  ['#T-481','Startup Lab','Вопрос по API-токену','l','5 ч назад','open'],
+  ['#T-480','Barakat AI','Настройка приватной сети VPC','m','1 дн назад','prog'],
+  ['#T-479','ТаджикТелеком','Экспорт логов биллинга','l','2 дн назад','open'],
+  ['#T-478','МинЦифра РТ','Продление Offtake-договора','m','3 дн назад','prog'],
+];
+const prio={h:'<span class="prio pr-h">Высокий</span>',m:'<span class="prio pr-m">Средний</span>',l:'<span class="prio pr-l">Низкий</span>'};
+document.getElementById('tickets').innerHTML = tickets.map(t=>{
+  const [id,cl,sub,pr,dt,st]=t;
+  const badge = st==='open'?'<span class="badge warn">Открыта</span>':'<span class="badge info">В работе</span>';
+  return `<tr><td class="strong mono">${id}</td><td>${cl}</td><td class="muted">${sub}</td><td>${prio[pr]}</td><td class="mono muted">${dt}</td><td>${badge}</td></tr>`;
+}).join('');
+
+// Incidents
+const incidents=[
+  ['18 июн','Кратковременный сбой аплинка №1','9 мин','Авто-переключение на резерв, без потерь','ok'],
+  ['03 июн','Перезапуск узла node-04 (ECC-ошибка памяти)','17 мин','1 узел выведен, нагрузка перенесена','ok'],
+];
+document.getElementById('incidents').innerHTML = incidents.map(i=>{
+  const [dt,name,dur,imp,st]=i;
+  return `<tr><td class="mono muted">${dt}</td><td class="strong">${name}</td><td class="mono">${dur}</td><td class="muted">${imp}</td><td><span class="badge ok">Устранён</span></td></tr>`;
+}).join('');
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Конфигуратор ресурсов</title>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="nav-links">
+      <a href="index.html">Тарифы</a>
+      <a href="configurator.html" class="active">Конфигуратор</a>
+      <a href="zinda-card.html">Карта Zinda</a>
+      <a href="console.html">Консоль</a>
+      <a href="api.html">API</a>
+    </div>
+    <div class="nav-right"><a href="register.html" class="btn btn-primary btn-sm">Войти</a></div>
+  </div>
+</nav>
+
+<div class="app wrap" style="padding:34px 28px 40px;">
+
+  <!-- Stepper -->
+  <div class="stepper mb32">
+    <div class="step done"><span class="num">✓</span><span class="lbl">Тариф</span></div><span class="step-line"></span>
+    <div class="step active"><span class="num">2</span><span class="lbl">Конфигурация</span></div><span class="step-line"></span>
+    <div class="step"><span class="num">3</span><span class="lbl">Регистрация</span></div><span class="step-line"></span>
+    <div class="step"><span class="num">4</span><span class="lbl">Оплата</span></div><span class="step-line"></span>
+    <div class="step"><span class="num">5</span><span class="lbl">Запуск</span></div>
+  </div>
+
+  <div class="flex items-center justify-between mb24" style="flex-wrap:wrap;gap:12px;">
+    <div>
+      <span class="eyebrow">Шаг 2 · Конфигуратор ресурсов</span>
+      <h1 class="h1 mt8">Настройте инстанс под задачу</h1>
+    </div>
+    <span class="chip">Тариф: <b id="planName" style="color:#fff;margin-left:4px;">Reserved · $4.20/GPU·ч</b></span>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1fr 340px; align-items:start;">
+
+    <!-- LEFT: config -->
+    <div class="grid" style="gap:22px;">
+
+      <!-- GPU picker -->
+      <div class="card">
+        <h3 class="h3 mb16">1 · Тип GPU</h3>
+        <div class="grid">
+          <div class="opt sel" onclick="selGpu(this,'H200',5.00)" data-gpu="H200">
+            <div class="tick">✓</div>
+            <div class="flex items-center gap12"><span class="mono" style="font-size:18px;font-weight:700;">NVIDIA H200</span><span class="badge ok"><span class="dot-live"></span> В наличии</span></div>
+            <div class="muted mt8" style="font-size:13px;">SXM5 · 141 ГБ HBM3e · 4.8 ТБ/с · InfiniBand NDR</div>
+            <div class="mt8"><span class="mono" style="color:var(--brand-hi);font-weight:700;">от $3.50</span> <span class="muted" style="font-size:13px;">/GPU·ч (Offtake) · On-Demand $5.00</span></div>
+          </div>
+        </div>
+        <p class="muted mt16" style="font-size:13px;">Единая платформа на NVIDIA H200 SXM5 (141 ГБ HBM3e) — топовые ускорители для обучения и инференса LLM.</p>
+      </div>
+
+      <!-- GPU count -->
+      <div class="card">
+        <h3 class="h3 mb16">2 · Количество GPU</h3>
+        <div class="pill-toggle" id="countToggle">
+          <button onclick="selCount(this,1)">1</button>
+          <button onclick="selCount(this,2)">2</button>
+          <button onclick="selCount(this,4)">4</button>
+          <button class="on" onclick="selCount(this,8)">8 (узел)</button>
+        </div>
+        <p class="muted mt16" style="font-size:13px;">8× GPU = целый узел Supermicro SYS-821GE-TNHR с InfiniBand NDR между картами. Для кластеров 16+ GPU — свяжитесь с продажами.</p>
+      </div>
+
+      <!-- Compute config -->
+      <div class="card">
+        <h3 class="h3 mb16">3 · Вычислительная конфигурация</h3>
+        <div class="grid g2" style="gap:16px;">
+          <div><label class="fld">vCPU</label><select class="input"><option>112 vCPU (Intel Xeon)</option><option>56 vCPU</option><option>28 vCPU</option></select></div>
+          <div><label class="fld">Оперативная память</label><select class="input"><option>2 ТБ DDR5</option><option>1 ТБ DDR5</option><option>512 ГБ DDR5</option></select></div>
+          <div><label class="fld">Системный диск (NVMe)</label><select class="input"><option>1.92 ТБ NVMe (включено)</option><option>3.84 ТБ NVMe</option></select></div>
+          <div><label class="fld">Хранилище данных (постоянное)</label><select class="input" onchange="calc()"><option value="0">Без доп. тома</option><option value="0.10">+7.68 ТБ ($0.10/ГБ·мес)</option><option value="0.10">+15.4 ТБ ($0.10/ГБ·мес)</option></select></div>
+        </div>
+      </div>
+
+      <!-- Region + Network -->
+      <div class="card">
+        <h3 class="h3 mb16">4 · Регион и сеть</h3>
+        <div class="grid g2" style="gap:16px;">
+          <div>
+            <label class="fld">Регион дата-центра</label>
+            <div class="opt sel" style="padding:14px;">
+              <div class="flex items-center justify-between"><b>🇹🇯 Душанбе (TJ-DYU-1)</b><span class="badge ok">~8 мс</span></div>
+              <div class="muted mt8" style="font-size:12px;">Локальная юрисдикция · «зелёная» ГЭС · InfiniBand NDR</div>
+            </div>
+          </div>
+          <div>
+            <label class="fld">Сеть между GPU</label>
+            <select class="input"><option>InfiniBand NDR 3.2 Тбит/с (по умолчанию)</option><option>Ethernet 100 Гбит/с</option></select>
+            <label class="fld mt16">Публичный IP / порты</label>
+            <input class="input" placeholder="22 (SSH), 8888 (Jupyter), 443">
+          </div>
+        </div>
+      </div>
+
+      <!-- OS / Image -->
+      <div class="card">
+        <h3 class="h3 mb16">5 · Образ ОС / ML-шаблон</h3>
+        <div class="grid g4">
+          <div class="opt sel" onclick="selImg(this)"><div class="tick">✓</div><b class="mono" style="font-size:14px;">PyTorch 2.4</b><div class="muted mt8" style="font-size:12px;">CUDA 12.4 · JupyterLab</div></div>
+          <div class="opt" onclick="selImg(this)"><div class="tick"></div><b class="mono" style="font-size:14px;">TensorFlow</b><div class="muted mt8" style="font-size:12px;">CUDA 12.4</div></div>
+          <div class="opt" onclick="selImg(this)"><div class="tick"></div><b class="mono" style="font-size:14px;">vLLM / инференс</b><div class="muted mt8" style="font-size:12px;">LLM serving</div></div>
+          <div class="opt" onclick="selImg(this)"><div class="tick"></div><b class="mono" style="font-size:14px;">Ubuntu 22.04</b><div class="muted mt8" style="font-size:12px;">чистый образ</div></div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="card">
+        <h3 class="h3 mb16">6 · Имя и параметры инстанса</h3>
+        <div class="grid g2" style="gap:16px;">
+          <div><label class="fld">Имя инстанса</label><input class="input" value="darya-train-01"></div>
+          <div><label class="fld">SSH-ключ</label><select class="input"><option>id_ed25519 (мой ключ)</option><option>+ Добавить новый ключ</option></select></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: sticky cost summary -->
+    <div class="card solid" style="position:sticky; top:90px;">
+      <span class="eyebrow">Сводка стоимости</span>
+      <div class="mt16" style="display:grid;gap:12px;font-size:14px;">
+        <div class="flex justify-between"><span class="muted">GPU</span><span id="sGpu">8× NVIDIA H200</span></div>
+        <div class="flex justify-between"><span class="muted">Тариф</span><span>Reserved</span></div>
+        <div class="flex justify-between"><span class="muted">Ставка</span><span class="mono" id="sRate">$4.20/GPU·ч</span></div>
+        <div class="flex justify-between"><span class="muted">Хранилище</span><span id="sStore">включено</span></div>
+        <div class="flex justify-between"><span class="muted">Egress</span><span style="color:var(--success);">$0</span></div>
+      </div>
+      <div class="divider"></div>
+      <div class="flex justify-between items-center">
+        <span class="muted">В час</span>
+        <span class="mono" style="font-size:22px;font-weight:800;color:var(--brand-hi);" id="hrCost">$33.60</span>
+      </div>
+      <div class="flex justify-between items-center mt8">
+        <span class="muted">В месяц (720 ч)</span>
+        <span class="mono" style="font-weight:700;" id="moCost">$24 192</span>
+      </div>
+      <div class="flex justify-between items-center mt8">
+        <span class="muted">Мин. аренда (100 ч)</span>
+        <span class="mono" id="minCost">$3 360</span>
+      </div>
+      <a href="register.html" class="btn btn-primary btn-block mt24">Продолжить → Регистрация</a>
+      <p class="muted center mt16" style="font-size:12px;">Минимальный срок аренды — 100 часов. Списание начнётся после запуска инстанса</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let rate=4.20, count=8;
+const q=new URLSearchParams(location.search).get('plan');
+if(q==='ondemand'){rate=5.00; document.getElementById('planName').textContent='On-Demand · $5.00/GPU·ч';}
+if(q==='offtake'){rate=3.50; document.getElementById('planName').textContent='Offtake · $3.50/GPU·ч';}
+function selGpu(el,name,r){document.querySelectorAll('[data-gpu]').forEach(o=>{o.classList.remove('sel');o.querySelector('.tick').textContent='';});el.classList.add('sel');el.querySelector('.tick').textContent='✓';document.getElementById('sGpu').textContent=count+'× NVIDIA '+name;calc();}
+function selCount(btn,n){document.querySelectorAll('#countToggle button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');count=n;document.getElementById('sGpu').textContent=n+'× NVIDIA H200';calc();}
+function selImg(el){el.parentElement.querySelectorAll('.opt').forEach(o=>{o.classList.remove('sel');o.querySelector('.tick').textContent='';});el.classList.add('sel');el.querySelector('.tick').textContent='✓';}
+function calc(){
+  document.getElementById('sRate').textContent='$'+rate.toFixed(2)+'/GPU·ч';
+  const hr=count*rate; const mo=hr*720; const min=hr*100;
+  document.getElementById('hrCost').textContent='$'+hr.toFixed(2);
+  document.getElementById('moCost').textContent='$'+mo.toLocaleString('ru-RU').replace(/\s/g,'\u202f');
+  document.getElementById('minCost').textContent='$'+Math.round(min).toLocaleString('ru-RU').replace(/\s/g,'\u202f');
+}
+calc();
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Кредитная GPU-карта Zinda Bank</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .zinda-main-grid { display:grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap:24px; align-items:start; }
+  @media (max-width: 920px){ .zinda-main-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora zinda"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="nav-links">
+      <a href="index.html">Тарифы</a>
+      <a href="configurator.html">Конфигуратор</a>
+      <a href="zinda-card.html" class="active" style="color:#fff;">Карта Zinda</a>
+      <a href="console.html">Консоль</a>
+      <a href="api.html">API</a>
+    </div>
+    <div class="nav-right">
+      <a href="payment.html" class="btn btn-ghost btn-sm">← К оплате</a>
+      <a href="register.html" class="btn btn-zinda btn-sm">Оформить карту</a>
+    </div>
+  </div>
+</nav>
+
+<div class="app wrap" style="padding:34px 28px 40px;">
+
+  <!-- HEADER -->
+  <div class="mb32">
+    <span class="chip zinda"><span style="width:7px;height:7px;border-radius:50%;background:var(--zinda-hi);box-shadow:0 0 8px var(--zinda-hi);display:inline-block;"></span> Интеграция с интернет-банкингом Zinda</span>
+    <h1 class="h1 mt16">Кредитная GPU-карта Zinda Bank</h1>
+    <p class="lead mt8" style="max-width:760px;">
+      Кредитная линия (постоплата), номинированная в GPU-часах H200. Резервируйте мощность сейчас — платите по факту.
+      Чем длиннее период, тем ниже ставка: от <b style="color:var(--zinda-hi);">$5,00</b> до <b style="color:var(--zinda-hi);">$4,00</b> за GPU·ч.
+    </p>
+  </div>
+
+  <div class="zinda-main-grid">
+
+    <!-- LEFT: bank-app mockup -->
+    <div class="card" style="padding:0; overflow:hidden; border-color:rgba(167,139,250,.28);">
+      <!-- browser bar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:11px 16px;background:#241A55;border-bottom:1px solid rgba(167,139,250,.2);">
+        <span style="width:11px;height:11px;border-radius:50%;background:#F87171;"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#FBBF24;"></span>
+        <span style="width:11px;height:11px;border-radius:50%;background:#34D399;"></span>
+        <span class="mono" style="margin-left:12px;color:var(--zinda-hi);font-size:12px;">online.zinda.tj</span>
+      </div>
+      <div style="display:grid;grid-template-columns:150px 1fr;min-height:520px;background:#0C0A1E;">
+        <!-- Zinda sidebar (white) -->
+        <div style="background:#fff;padding:18px 12px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:26px;padding:0 4px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L21 8v8l-9 6-9-6V8l9-6z" fill="#7B4FD0"/><path d="M8.5 9.5L12 15l3.5-5.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-weight:800;color:#1A1330;letter-spacing:.5px;font-size:16px;">ZINDA</span>
+          </div>
+          <div style="display:grid;gap:4px;">
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;background:rgba(123,79,208,.1);color:#5B2FB0;font-weight:600;font-size:13px;">▦ Главная</div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;color:#6B6480;font-size:13px;">⇄ Платежи</div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;color:#6B6480;font-size:13px;">▤ Заявки</div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;color:#6B6480;font-size:13px;">✉ Чат</div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;color:#6B6480;font-size:13px;">⚙ Настройки</div>
+          </div>
+        </div>
+        <!-- content -->
+        <div style="padding:18px;">
+          <div class="zinda-hero-crystal mb16"></div>
+          <div style="font-weight:700;font-size:17px;margin-bottom:14px;">Кредитная GPU-карта · Zinda Bank</div>
+          <!-- credit card visual -->
+          <div class="zinda-card-visual mb16">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div class="zinda-chip-emv"></div>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="opacity:.9;"><path d="M8.5 8.5a5 5 0 0 1 0 7" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 6a8 8 0 0 1 0 12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M14.5 4a11 11 0 0 1 0 16" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <div style="margin-top:34px;font-weight:800;font-size:15px;letter-spacing:1px;">GPU CREDIT · H200</div>
+            <div style="opacity:.85;font-size:12px;margin-top:4px;">Кредитный лимит: <span id="cardLimit">2 190</span> GPU-часов</div>
+          </div>
+          <!-- usage -->
+          <div class="card solid" style="padding:16px;">
+            <div class="flex items-center justify-between" style="gap:14px;">
+              <div>
+                <div class="muted" style="font-size:12px;">Использовано в текущем периоде</div>
+                <div class="stat-num zinda" style="font-size:26px;" id="usedHours">1 460 ч</div>
+                <div class="muted" style="font-size:12px;">≈ <span id="usedMoney">$6 570</span></div>
+              </div>
+              <div style="text-align:center;">
+                <svg width="82" height="82" viewBox="0 0 82 82">
+                  <circle cx="41" cy="41" r="34" fill="none" stroke="rgba(123,79,208,.18)" stroke-width="9"/>
+                  <circle class="gauge-ring" id="gaugeRing" cx="41" cy="41" r="34" fill="none" stroke="#A78BFA" stroke-width="9" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="70" style="transform-origin:center;"/>
+                  <text x="41" y="46" text-anchor="middle" fill="#fff" font-size="17" font-weight="700" id="gaugePct">67%</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: interactive calculator -->
+    <div>
+      <div class="card" style="border-color:rgba(167,139,250,.28);">
+        <span class="eyebrow zinda">Калькулятор кредитной линии</span>
+        <h3 class="h3 mt8">Подберите объём и период</h3>
+        <p class="muted mt8" style="font-size:14px;">Ставка применяется ко всему объёму периода. Двигайте ползунки — расчёт обновится мгновенно.</p>
+
+        <div class="mt24">
+          <label class="fld">Объём кредита: <span class="mono" id="hLabel" style="color:var(--zinda-hi);">1 460 ч</span> <span class="muted" id="pLabel" style="font-weight:500;">(2 месяца)</span></label>
+          <input type="range" min="100" max="2190" value="1460" step="5" id="hRange" style="width:100%;accent-color:#7B4FD0;" oninput="zcalc()">
+          <div class="flex justify-between muted mt8" style="font-size:11px;"><span>мин. 100 ч</span><span>макс. 2 190 ч (3 мес)</span></div>
+        </div>
+
+        <div class="mt24">
+          <label class="fld">Масштаб</label>
+          <div class="pill-toggle" id="scaleToggle">
+            <button class="on" onclick="setScale(1,this)">1 GPU</button>
+            <button onclick="setScale(8,this)">Сервер 8× H200</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="grid g2" style="gap:14px;">
+          <div class="card solid" style="text-align:center;padding:18px;">
+            <div class="muted" style="font-size:12px;">Ставка (ступень)</div>
+            <div class="stat-num zinda" style="font-size:30px;" id="outRate">$4,50</div>
+            <div class="muted" style="font-size:11px;">за GPU·ч</div>
+          </div>
+          <div class="card solid" style="text-align:center;padding:18px;">
+            <div class="muted" style="font-size:12px;">Итого к оплате</div>
+            <div class="stat-num zinda" style="font-size:30px;" id="outTotal">$6 570</div>
+            <div class="muted" style="font-size:11px;" id="outScale">1 GPU · постоплата</div>
+          </div>
+        </div>
+
+        <div class="opt zinda mt16" style="padding:16px;cursor:default;">
+          <div class="flex items-center justify-between" style="gap:12px;">
+            <div>
+              <b style="color:var(--zinda-hi);">Экономия против базовой ставки</b>
+              <div class="muted" style="font-size:12px;margin-top:4px;" id="saveNote">vs $5,00/ч на том же объёме</div>
+            </div>
+            <div class="stat-num zinda" style="font-size:26px;" id="outSave">−$730</div>
+          </div>
+        </div>
+
+        <a href="register.html" class="btn btn-zinda btn-block btn-lg mt24">Оформить кредитную карту Zinda →</a>
+        <p class="muted center mt16" style="font-size:12px;">🔒 Кредитование через банк-партнёр · KYB · договор постоплаты</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="grid g4 mt40">
+    <div class="card"><b style="color:var(--zinda-hi);">Лимит в GPU-часах</b><p class="muted mt8" style="font-size:13px;">Кредитная линия номинирована в часах H200 — резерв сейчас, оплата по факту.</p></div>
+    <div class="card"><b style="color:var(--zinda-hi);">Ступенчатый тариф</b><p class="muted mt8" style="font-size:13px;">Чем длиннее период, тем ниже ставка: $5,00 → $4,50 → $4,00 за GPU·ч.</p></div>
+    <div class="card"><b style="color:var(--zinda-hi);">Контроль лимита</b><p class="muted mt8" style="font-size:13px;">Уведомления при 80% и 90% использования, блокировка новых резервов при 100%.</p></div>
+    <div class="card"><b style="color:var(--zinda-hi);">Сверка с биллингом</b><p class="muted mt8" style="font-size:13px;">GPU-часы сверяются с системой биллинга Darya.ai — точность ≥ 99,9%.</p></div>
+  </div>
+
+  <!-- FULL TARIFF GRID -->
+  <div class="card mt40" style="border-color:rgba(167,139,250,.28);">
+    <div class="flex items-center justify-between mb16" style="flex-wrap:wrap;gap:8px;">
+      <div>
+        <span class="eyebrow zinda">Полная тарифная сетка</span>
+        <h3 class="h3 mt8">Ставка по ступеням · GPU H200</h3>
+      </div>
+      <span class="badge zinda">Активная ступень подсвечивается расчётом ↑</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="tbl" id="tariffTable">
+        <thead><tr><th>Порог / период</th><th>Часы</th><th>$/ч (1 GPU)</th><th>Итого 1 GPU</th><th>Итого сервер 8×</th></tr></thead>
+        <tbody id="tariffBody"></tbody>
+      </table>
+    </div>
+    <p class="muted mt16" style="font-size:12px;">Ставка применяется ко всему объёму периода. Максимальный период кредита — 3 месяца (2 190 ч на 1 GPU).</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="flex items-center justify-between" style="flex-wrap:wrap;gap:16px;">
+      <div><a href="index.html" class="logo" style="font-size:20px;">darya<sup>ai</sup></a><div class="muted mt8">Кредитная GPU-карта — партнёрская интеграция с Zinda Bank</div></div>
+      <div class="muted">Источник: <a href="https://zinda.tj/" target="_blank" style="color:var(--zinda-hi);">Zinda Bank</a></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// --- tariff model ---------------------------------------------------
+// tier rule: <=730h => $5.00 ; 731..2189h => $4.50 ; =2190h => $4.00
+function rateFor(h){ if(h>=2190) return 4.00; if(h>730) return 4.50; return 5.00; }
+function periodLabel(h){
+  if(h<=250) return h+' ч';
+  if(h<=500) return '≈ 3 недели';
+  if(h<=730) return '≈ 1 месяц';
+  if(h<=1095) return '≈ 1,5 месяца';
+  if(h<=1460) return '≈ 2 месяца';
+  if(h<=1825) return '≈ 2,5 месяца';
+  return '3 месяца (макс.)';
+}
+function fmt(n){ return '$'+Math.round(n).toLocaleString('ru-RU').replace(/\s/g,'\u202f'); }
+function fmtH(h){ return h.toLocaleString('ru-RU').replace(/\s/g,'\u202f')+' ч'; }
+
+let scale = 1;
+function setScale(s,btn){
+  scale=s;
+  document.querySelectorAll('#scaleToggle button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  zcalc();
+}
+
+const TARIFF_ROWS = [
+  {label:'Мин. лимит',        h:100},
+  {label:'250 часов',         h:250},
+  {label:'500 часов',         h:500},
+  {label:'1 месяц',           h:730},
+  {label:'1,5 месяца',        h:1095},
+  {label:'2 месяца',          h:1460},
+  {label:'2,5 месяца',        h:1825},
+  {label:'3 месяца (макс.)',  h:2190},
+];
+function buildTable(){
+  const b=document.getElementById('tariffBody');
+  b.innerHTML = TARIFF_ROWS.map(r=>{
+    const rate=rateFor(r.h), one=rate*r.h, srv=one*8, isMax=r.h===2190;
+    return `<tr data-h="${r.h}" class="${isMax?'zmax':''}">
+      <td class="strong">${r.label}</td>
+      <td class="mono">${fmtH(r.h)}</td>
+      <td class="mono">$${rate.toFixed(2).replace('.',',')}</td>
+      <td class="mono">${fmt(one)}</td>
+      <td class="mono">${fmt(srv)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// nearest tariff row to current hours (for highlight)
+function nearestRowH(h){
+  let best=TARIFF_ROWS[0].h, d=1e9;
+  TARIFF_ROWS.forEach(r=>{ const dd=Math.abs(r.h-h); if(dd<d){d=dd;best=r.h;} });
+  return best;
+}
+
+function zcalc(){
+  const h=+document.getElementById('hRange').value;
+  const rate=rateFor(h);
+  const total=rate*h*scale;
+  const base=5.00*h*scale;
+  const save=base-total;
+
+  document.getElementById('hLabel').textContent=fmtH(h);
+  document.getElementById('pLabel').textContent='('+periodLabel(h)+')';
+  document.getElementById('outRate').textContent='$'+rate.toFixed(2).replace('.',',');
+  document.getElementById('outTotal').textContent=fmt(total);
+  document.getElementById('outScale').textContent=(scale===8?'сервер 8× H200':'1 GPU')+' · постоплата';
+  document.getElementById('outSave').textContent=(save>0?'−':'')+fmt(save);
+  document.getElementById('saveNote').textContent='vs $5,00/ч на '+fmtH(h)+(scale===8?' × 8':'');
+
+  // card mockup sync
+  const limit=2190*scale;
+  document.getElementById('cardLimit').textContent=limit.toLocaleString('ru-RU').replace(/\s/g,'\u202f');
+  document.getElementById('usedHours').textContent=fmtH(h*scale);
+  document.getElementById('usedMoney').textContent=fmt(total);
+  const pct=Math.round(h/2190*100);
+  document.getElementById('gaugePct').textContent=pct+'%';
+  const circ=2*Math.PI*34;
+  document.getElementById('gaugeRing').setAttribute('stroke-dasharray',circ.toFixed(1));
+  document.getElementById('gaugeRing').setAttribute('stroke-dashoffset',(circ*(1-h/2190)).toFixed(1));
+
+  // highlight active tier row
+  const nr=nearestRowH(h);
+  document.querySelectorAll('#tariffBody tr').forEach(tr=>{
+    tr.classList.toggle('zactive', +tr.dataset.h===nr && !tr.classList.contains('zmax'));
+    if(+tr.dataset.h===nr && tr.classList.contains('zmax')) tr.classList.add('zactive');
+    else if(tr.classList.contains('zmax') && +tr.dataset.h!==nr) tr.classList.remove('zactive');
+  });
+}
+buildTable();
+zcalc();
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

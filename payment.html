@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Оплата</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .pay-grid { display:grid; grid-template-columns: 1fr 300px; align-items:start; gap:20px; }
+  @media (max-width: 860px){ .pay-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="nav-links">
+      <a href="index.html">Тарифы</a>
+      <a href="configurator.html">Конфигуратор</a>
+      <a href="console.html">Консоль</a>
+      <a href="api.html">API</a>
+    </div>
+    <div class="nav-right"><a href="launch.html" class="btn btn-ghost btn-sm">Пропустить →</a></div>
+  </div>
+</nav>
+
+<div class="app wrap" style="padding:34px 28px 40px; max-width:1040px;">
+
+  <div class="stepper mb32">
+    <div class="step done"><span class="num">✓</span><span class="lbl">Тариф</span></div><span class="step-line"></span>
+    <div class="step done"><span class="num">✓</span><span class="lbl">Конфигурация</span></div><span class="step-line"></span>
+    <div class="step done"><span class="num">✓</span><span class="lbl">Регистрация</span></div><span class="step-line"></span>
+    <div class="step active"><span class="num">4</span><span class="lbl">Оплата</span></div><span class="step-line"></span>
+    <div class="step"><span class="num">5</span><span class="lbl">Запуск</span></div>
+  </div>
+
+  <div class="center mb32">
+    <span class="eyebrow">Шаг 4 · Оплата</span>
+    <h1 class="h1 mt8">Четыре способа оплаты</h1>
+    <p class="muted mt8">Пополните баланс, оплатите через банк-эквайринг, выставьте счёт организации — или откройте кредитную GPU-карту Zinda Bank.</p>
+  </div>
+
+  <!-- method toggle -->
+  <div class="center mb32">
+    <div class="pill-toggle" id="payToggle" style="flex-wrap:wrap;">
+      <button class="on" onclick="showPay('balance',this)">Баланс Darya.ai</button>
+      <button onclick="showPay('bank',this)">Банковский эквайринг</button>
+      <button onclick="showPay('invoice',this)">Счёт для организации</button>
+      <button onclick="showPay('zinda',this)" style="color:var(--zinda-hi);">Кредитная карта Zinda</button>
+    </div>
+  </div>
+
+  <div class="pay-grid">
+    <div>
+
+      <!-- BALANCE -->
+      <div class="pay-pane" id="pane-balance">
+        <div class="card mb24">
+          <div class="flex items-center justify-between mb16">
+            <div><span class="eyebrow">Баланс аккаунта</span><div class="stat-num" style="color:var(--brand-hi);">$0.00</div></div>
+            <span class="badge info">Посекундная тарификация</span>
+          </div>
+          <label class="fld">Сумма пополнения</label>
+          <div class="grid g4 mb16">
+            <div class="opt" onclick="selAmt(this,50)"><div class="tick"></div><b>$50</b></div>
+            <div class="opt sel" onclick="selAmt(this,500)"><div class="tick">✓</div><b>$500</b></div>
+            <div class="opt" onclick="selAmt(this,2000)"><div class="tick"></div><b>$2 000</b></div>
+            <div class="opt" onclick="selAmt(this,10000)"><div class="tick"></div><b>$10 000</b></div>
+          </div>
+          <div class="grid g2" style="gap:16px;">
+            <div><label class="fld">Номер карты</label><input class="input" placeholder="0000 0000 0000 0000"></div>
+            <div><label class="fld">Срок / CVC</label><input class="input" placeholder="MM/YY · 123"></div>
+          </div>
+          <div class="flex items-center gap12 mt16 muted" style="font-size:12px;">
+            🔒 Защищённый платёж · Visa / Mastercard / МИР · Корти Милли · крипто (USDC)
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center justify-between">
+            <div><b>Автопополнение</b><div class="muted mt8" style="font-size:13px;">Когда баланса меньше чем на 2 часа работы — пополнить на $500 автоматически.</div></div>
+            <label class="pill-toggle"><button class="on">Вкл</button><button>Выкл</button></label>
+          </div>
+          <div class="divider"></div>
+          <div class="flex items-center justify-between">
+            <div><b>Лимит расходов</b><div class="muted mt8" style="font-size:13px;">Максимум списаний в сутки для защиты от неконтролируемого расхода.</div></div>
+            <input class="input" style="max-width:140px;" value="$80/ч">
+          </div>
+        </div>
+      </div>
+
+      <!-- BANK -->
+      <div class="pay-pane" id="pane-bank" style="display:none;">
+        <div class="card mb24">
+          <div class="flex items-center gap12 mb16"><span class="chip">🏦 Эквайринг</span><span class="badge ok">3-D Secure</span></div>
+          <h3 class="h3 mb16">Прямая оплата через банк-партнёр</h3>
+          <p class="muted mb16" style="font-size:14px;">Разовая оплата за конкретный период резерва. Средства проходят через платёжный шлюз банка-эквайера напрямую поставщику услуг.</p>
+          <div class="grid g2" style="gap:16px;">
+            <div><label class="fld">Банк-эквайер</label><select class="input"><option>Ориёнбонк (шлюз)</option><option>Банк Эсхата</option><option>Душанбе Сити Банк</option><option>Zinda Capital</option><option>Амонатбонк</option><option>Спитамен Банк</option><option>Международный перевод (SWIFT)</option></select></div>
+            <div><label class="fld">Сумма к оплате</label><input class="input" value="$24 192.00" readonly></div>
+          </div>
+          <div class="opt mt16" style="text-align:center;padding:20px;">
+            <div class="muted" style="font-size:13px;">Вы будете перенаправлены на защищённую страницу банка</div>
+            <div class="mono mt8" style="color:var(--brand-hi);">secure.pay.oriyonbank.tj</div>
+          </div>
+        </div>
+        <div class="card">
+          <b>Интеграция «под ключ»</b>
+          <div class="grid" style="gap:10px;font-size:13px;color:var(--text-2);margin-top:12px;">
+            <div>✓ API платёжного шлюза (webhook о статусе платежа)</div>
+            <div>✓ Автоматическая привязка платежа к счёту и балансу</div>
+            <div>✓ Возврат и сверка через личный кабинет</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ZINDA CREDIT GPU-CARD -->
+      <div class="pay-pane" id="pane-zinda" style="display:none;">
+        <div class="card mb24" style="border-color:rgba(167,139,250,.28);">
+          <div class="flex items-center gap12 mb16">
+            <span class="chip zinda">💳 Кредитная GPU-карта</span>
+            <span class="badge zinda">Постоплата · Zinda Bank</span>
+          </div>
+          <h3 class="h3 mb16">Кредитная линия в GPU-часах H200</h3>
+          <p class="muted mb16" style="font-size:14px;">Резервируйте мощность сейчас — платите по факту. Ступенчатый тариф: чем длиннее период, тем ниже ставка ($5,00 → $4,00/ч). Кредитование через банк-партнёр Zinda Bank.</p>
+          <div class="grid g2" style="gap:16px;">
+            <div><label class="fld">Кредитный лимит</label><input class="input" value="2 190 GPU-часов" readonly></div>
+            <div><label class="fld">Период кредита</label><select class="input"><option>3 месяца (макс.) · $4,00/ч</option><option>1–3 месяца · $4,50/ч</option><option>до 1 месяца · $5,00/ч</option></select></div>
+          </div>
+          <div class="opt zinda mt16" style="padding:16px;cursor:default;">
+            <div class="flex items-center justify-between" style="gap:12px;">
+              <div><b style="color:var(--zinda-hi);">Экономия на 3-месячном плане</b><div class="muted" style="font-size:12px;margin-top:4px;">2 190 ч по $4,00 вместо $5,00 · на 1 GPU</div></div>
+              <div class="stat-num zinda" style="font-size:24px;">−$2 190</div>
+            </div>
+          </div>
+          <a href="zinda-card.html" class="btn btn-zinda mt16">Открыть карту и калькулятор →</a>
+        </div>
+        <div class="card">
+          <b>Контроль кредитного лимита</b>
+          <div class="grid" style="gap:10px;font-size:13px;color:var(--text-2);margin-top:12px;">
+            <div>✓ Уведомления при 80% и 90% использования лимита</div>
+            <div>✓ Автоблокировка новых резервов при достижении 100%</div>
+            <div>✓ Сверка GPU-часов с биллингом — точность ≥ 99,9%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVOICE -->
+      <div class="pay-pane" id="pane-invoice" style="display:none;">
+        <div class="card mb24">
+          <div class="flex items-center gap12 mb16"><span class="chip">📄 Постоплата</span><span class="badge warn">Требуется KYB</span></div>
+          <h3 class="h3 mb16">Счёт-фактура для организации</h3>
+          <p class="muted mb16" style="font-size:14px;">После верификации организации доступна постоплата: ежемесячный счёт с НДС, оплата банковским переводом по договору.</p>
+          <div class="grid g2" style="gap:16px;">
+            <div><label class="fld">Организация</label><input class="input" value="ООО «...»"></div>
+            <div><label class="fld">Платёжный период</label><select class="input"><option>Ежемесячно</option><option>Ежеквартально</option></select></div>
+            <div><label class="fld">Способ оплаты счёта</label><select class="input"><option>Банковский перевод</option><option>Прямой договор (Offtake)</option></select></div>
+            <div><label class="fld">Кредитный лимит</label><input class="input" value="$50 000" readonly></div>
+          </div>
+          <button class="btn btn-ghost mt16">Скачать образец счёта (PDF)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- summary -->
+    <div class="card solid" style="position:sticky; top:90px;">
+      <span class="eyebrow">Итог</span>
+      <div class="mt16" style="display:grid;gap:12px;font-size:14px;">
+        <div class="flex justify-between"><span class="muted">8× H200 · Reserved</span><span class="mono">$33.60/ч</span></div>
+        <div class="flex justify-between"><span class="muted">Оценка/мес (720 ч)</span><span class="mono">$24 192</span></div>
+        <div class="flex justify-between"><span class="muted">Egress</span><span style="color:var(--success);">$0</span></div>
+        <div class="flex justify-between"><span class="muted">Способ</span><span id="sMethod">Баланс</span></div>
+      </div>
+      <div class="divider"></div>
+      <a href="launch.html" class="btn btn-primary btn-block">Оплатить и продолжить</a>
+      <p class="muted center mt16" style="font-size:12px;">🔒 PCI DSS · шифрование данных карты</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPay(id,btn){
+  document.querySelectorAll('.pay-pane').forEach(p=>p.style.display='none');
+  document.getElementById('pane-'+id).style.display='block';
+  document.querySelectorAll('#payToggle button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const label={balance:'Баланс',bank:'Банк-эквайринг',invoice:'Счёт (постоплата)',zinda:'Кредитная карта Zinda'};
+  document.getElementById('sMethod').textContent=label[id];
+}
+function selAmt(el,a){el.parentElement.querySelectorAll('.opt').forEach(o=>{o.classList.remove('sel');o.querySelector('.tick').textContent='';});el.classList.add('sel');el.querySelector('.tick').textContent='✓';}
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

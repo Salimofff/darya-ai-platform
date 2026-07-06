@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Консоль мониторинга</title>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="console">
+  <aside class="side">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="grp">Ресурсы</div>
+    <a href="launch.html">▸ Инстансы <span class="cnt">2</span></a>
+    <a href="console.html" class="active">▸ Мониторинг</a>
+    <a href="configurator.html">＋ Новый инстанс</a>
+    <div class="grp">Разработка</div>
+    <a href="api.html">▸ API-ключи</a>
+    <a href="api.html">▸ Документация</a>
+    <div class="grp">Аккаунт</div>
+    <a href="payment.html">▸ Биллинг · Баланс</a>
+    <a href="register.html">▸ Организация</a>
+    <a href="console.html">▸ Команда</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div><span class="eyebrow">Консоль</span><h1 class="h2 mt8">Мониторинг · Обзор</h1></div>
+      <div class="flex items-center gap16">
+        <span class="chip"><span class="dot-live"></span> Баланс $476.48</span>
+        <a href="configurator.html" class="btn btn-primary btn-sm">＋ Запустить GPU</a>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div class="grid g4 mb24">
+      <div class="card"><div class="muted" style="font-size:13px;">Активные инстансы</div><div class="stat-num" style="color:#fff;">2</div><span class="badge ok mt8"><span class="dot-live"></span> Running</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">GPU в работе</div><div class="stat-num" style="color:var(--brand-hi);">12</div><span class="muted mt8" style="font-size:12px;">из 16 в резерве</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Расход сегодня</div><div class="stat-num" style="color:#fff;">$412</div><span class="badge info mt8">Reserved $4.20/ч</span></div>
+      <div class="card"><div class="muted" style="font-size:13px;">Ср. загрузка GPU</div><div class="stat-num" style="color:var(--success);">89%</div><span class="muted mt8" style="font-size:12px;">за 24 ч</span></div>
+    </div>
+
+    <!-- Instances table -->
+    <div class="card mb24">
+      <div class="flex items-center justify-between mb16"><h3 class="h3">Инстансы</h3><input class="input search" placeholder="Поиск по имени…"></div>
+      <table class="tbl">
+        <thead><tr><th>Имя</th><th>GPU</th><th>Регион</th><th>Статус</th><th>Время</th><th>$/ч</th><th>Действия</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="strong mono">darya-train-01</td><td>8× H200</td><td>🇹🇯 DYU-1</td>
+            <td><span class="badge ok"><span class="dot-live"></span> Running</span></td><td class="mono">6ч 12м</td><td class="mono">$33.60</td>
+            <td><a href="launch.html" class="btn btn-ghost btn-sm">Открыть</a></td>
+          </tr>
+          <tr>
+            <td class="strong mono">darya-infer-02</td><td>4× H200</td><td>🇹🇯 DYU-1</td>
+            <td><span class="badge ok"><span class="dot-live"></span> Running</span></td><td class="mono">2ч 03м</td><td class="mono">$16.80</td>
+            <td><a href="launch.html" class="btn btn-ghost btn-sm">Открыть</a></td>
+          </tr>
+          <tr>
+            <td class="strong mono">darya-sd-test</td><td>1× H200</td><td>🇹🇯 DYU-1</td>
+            <td><span class="badge off">Stopped</span></td><td class="mono">—</td><td class="mono">$5.00</td>
+            <td><a href="#" class="btn btn-ghost btn-sm">Старт</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- usage chart + billing -->
+    <div class="grid" style="grid-template-columns: 1.6fr 1fr; align-items:start;">
+      <div class="card">
+        <h3 class="h3 mb16">Загрузка GPU · 24 часа</h3>
+        <div class="flex" style="gap:10px;align-items:stretch;"><div class="muted mono" style="display:flex;flex-direction:column;justify-content:space-between;font-size:11px;padding:2px 0;"><span>100%</span><span>50%</span><span>0%</span></div><svg viewBox="0 0 600 180" style="width:100%;height:180px;">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D7EF8" stop-opacity=".35"/><stop offset="1" stop-color="#2D7EF8" stop-opacity="0"/></linearGradient></defs>
+          <polyline fill="none" stroke="#2D7EF8" stroke-width="2.5" points="0,120 60,90 120,100 180,60 240,70 300,40 360,55 420,35 480,50 540,30 600,45"/>
+          <polygon fill="url(#g)" points="0,120 60,90 120,100 180,60 240,70 300,40 360,55 420,35 480,50 540,30 600,45 600,180 0,180"/>
+        </svg></div>
+        <div class="flex justify-between muted" style="font-size:12px;"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>сейчас</span></div>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between mb16"><h3 class="h3">Биллинг</h3><span class="badge info">Reserved</span></div>
+        <div style="display:grid;gap:12px;font-size:14px;">
+          <div class="flex justify-between"><span class="muted">Баланс</span><span class="mono">$476.48</span></div>
+          <div class="flex justify-between"><span class="muted">Расход за месяц</span><span class="mono">$11 240</span></div>
+          <div class="flex justify-between"><span class="muted">Прогноз до конца мес.</span><span class="mono">$23 900</span></div>
+          <div class="flex justify-between"><span class="muted">Egress</span><span style="color:var(--success);">$0.00</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="flex gap12">
+          <a href="payment.html" class="btn btn-primary btn-sm wfull">Пополнить</a>
+          <button class="btn btn-ghost btn-sm wfull">Счёт PDF</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

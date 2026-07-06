@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Центр управления ДЦ · Обзор</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  /* Admin-specific helpers */
+  .kpi-lg{font-size:clamp(28px,3vw,40px);font-weight:800;letter-spacing:-.02em;}
+  .delta-up{color:var(--success);font-size:13px;font-weight:600;}
+  .delta-down{color:var(--danger);font-size:13px;font-weight:600;}
+  .gauge-track{width:100%;height:9px;border-radius:99px;background:rgba(120,150,220,.14);overflow:hidden;}
+  .gauge-fill{height:100%;border-radius:99px;background:var(--brand);}
+  .heat{display:grid;grid-template-columns:repeat(16,1fr);gap:6px;}
+  .heat i{aspect-ratio:1;border-radius:5px;display:block;}
+  .role-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;background:rgba(45,126,248,.1);border:1px solid var(--border-2);color:var(--brand-hi);font-size:13px;font-weight:600;}
+  .alert-row{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
+  .alert-row:last-child{border-bottom:none;}
+  .alert-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;}
+  .mini-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-3);}
+  .mini-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .sq{width:10px;height:10px;border-radius:3px;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="console">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="grp">Центр управления</div>
+    <a href="admin-overview.html" class="active">▸ Обзор ДЦ</a>
+    <a href="admin-hardware.html">▸ Железо · GPU-стойки</a>
+    <a href="admin-clients.html">▸ Клиенты · Аренды · Биллинг</a>
+    <a href="admin-infra.html">▸ Сеть · Энергия · Охлаждение</a>
+    <a href="admin-ops.html">▸ Операции · Алерты · SLA <span class="cnt">3</span></a>
+    <div class="grp">Клиентская платформа</div>
+    <a href="console.html">▸ Консоль клиента</a>
+    <a href="configurator.html">▸ Конфигуратор</a>
+    <a href="index.html">▸ Сайт · Тарифы</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <span class="eyebrow">Центр управления дата-центром</span>
+        <h1 class="h2 mt8">Обзор · tj-dyu-1 · Душанбе</h1>
+      </div>
+      <div class="flex items-center gap16">
+        <span class="role-pill">👤 Руководитель техкоманды</span>
+        <span class="chip"><span class="dot-live"></span> Все системы в норме</span>
+      </div>
+    </div>
+
+    <!-- TOP KPI ROW -->
+    <div class="grid g4 mb24">
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Загрузка кластера GPU</div>
+        <div class="kpi-lg" style="color:var(--brand-hi);">78%</div>
+        <div class="gauge-track mt8"><div class="gauge-fill" style="width:78%;"></div></div>
+        <div class="mt8"><span class="delta-up">▲ +6%</span> <span class="muted" style="font-size:12px;">за неделю</span></div>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Активные GPU / всего</div>
+        <div class="kpi-lg" style="color:#fff;">100 <span style="font-size:18px;color:var(--text-3);font-weight:600;">/ 128</span></div>
+        <span class="muted mt8" style="font-size:12px;display:block;">16 узлов × 8× H200 · 28 в резерве</span>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Выручка · месяц (MRR)</div>
+        <div class="kpi-lg" style="color:var(--success);">$247K</div>
+        <div class="mt8"><span class="delta-up">▲ +12%</span> <span class="muted" style="font-size:12px;">к пред. мес.</span></div>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Доступность (SLA)</div>
+        <div class="kpi-lg" style="color:var(--success);">99.94%</div>
+        <span class="badge ok mt8">Цель 99–95% выполнена</span>
+      </div>
+    </div>
+
+    <!-- SECOND KPI ROW -->
+    <div class="grid g4 mb24">
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Энергопотребление</div>
+        <div class="kpi-lg" style="color:#fff;">142 <span style="font-size:16px;color:var(--text-3);">кВт</span></div>
+        <span class="badge info mt8">100% ГЭС · «зелёная» энергия</span>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Эффективность (PUE)</div>
+        <div class="kpi-lg" style="color:var(--brand-hi);">1.24</div>
+        <span class="muted mt8" style="font-size:12px;display:block;">цель ≤ 1.30 · охлаждение ОК</span>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Ср. темп. GPU</div>
+        <div class="kpi-lg" style="color:var(--success);">64°C</div>
+        <span class="muted mt8" style="font-size:12px;display:block;">порог 85°C · в норме</span>
+      </div>
+      <div class="card">
+        <div class="muted" style="font-size:13px;">Открытые алерты</div>
+        <div class="kpi-lg" style="color:var(--warning);">3</div>
+        <span class="muted mt8" style="font-size:12px;display:block;">1 warning · 2 info · 0 crit</span>
+      </div>
+    </div>
+
+    <!-- MID: utilization chart + revenue -->
+    <div class="grid mb24" style="grid-template-columns:1.7fr 1fr;align-items:start;">
+      <div class="card">
+        <div class="flex items-center justify-between mb16">
+          <h3 class="h3">Загрузка кластера · 24 часа</h3>
+          <span class="badge info">пик 92% в 14:00</span>
+        </div>
+        <div class="flex" style="gap:10px;align-items:stretch;">
+          <div class="muted mono" style="display:flex;flex-direction:column;justify-content:space-between;font-size:11px;padding:2px 0;"><span>100%</span><span>50%</span><span>0%</span></div>
+          <svg viewBox="0 0 600 190" style="width:100%;height:190px;">
+            <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D7EF8" stop-opacity=".35"/><stop offset="1" stop-color="#2D7EF8" stop-opacity="0"/></linearGradient></defs>
+            <line x1="0" y1="47" x2="600" y2="47" stroke="rgba(120,150,220,.1)"/>
+            <line x1="0" y1="95" x2="600" y2="95" stroke="rgba(120,150,220,.1)"/>
+            <line x1="0" y1="143" x2="600" y2="143" stroke="rgba(120,150,220,.1)"/>
+            <polyline fill="none" stroke="#2D7EF8" stroke-width="2.5" points="0,110 60,95 120,120 180,80 240,70 300,45 360,30 420,55 480,40 540,60 600,50"/>
+            <polygon fill="url(#gA)" points="0,110 60,95 120,120 180,80 240,70 300,45 360,30 420,55 480,40 540,60 600,50 600,190 0,190"/>
+          </svg>
+        </div>
+        <div class="flex justify-between muted" style="font-size:12px;"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>сейчас</span></div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center justify-between mb16"><h3 class="h3">Финансы · июль</h3><span class="badge ok">▲ 12%</span></div>
+        <div style="display:grid;gap:14px;font-size:14px;">
+          <div class="flex justify-between"><span class="muted">Выручка (MRR)</span><span class="mono" style="color:#fff;">$247 000</span></div>
+          <div class="flex justify-between"><span class="muted">Прогноз до конца мес.</span><span class="mono">$258 400</span></div>
+          <div class="flex justify-between"><span class="muted">Энергозатраты</span><span class="mono">$21 300</span></div>
+          <div class="flex justify-between"><span class="muted">Маржа (gross)</span><span class="mono" style="color:var(--success);">71%</span></div>
+          <div class="flex justify-between"><span class="muted">Неоплаченные счета</span><span class="mono" style="color:var(--warning);">$8 400</span></div>
+        </div>
+        <div class="divider"></div>
+        <a href="admin-clients.html" class="btn btn-ghost btn-sm wfull">Открыть биллинг →</a>
+      </div>
+    </div>
+
+    <!-- BOTTOM: rack heatmap + alerts -->
+    <div class="grid" style="grid-template-columns:1.7fr 1fr;align-items:start;">
+      <div class="card">
+        <div class="flex items-center justify-between mb16"><h3 class="h3">Состояние узлов · 16 серверов × 8 GPU</h3><a href="admin-hardware.html" class="muted" style="font-size:13px;text-decoration:none;">Подробнее →</a></div>
+        <div class="heat mb16" id="heat"></div>
+        <div class="mini-legend">
+          <span><i class="sq" style="background:#34D399;"></i> В работе (78%)</span>
+          <span><i class="sq" style="background:#2D7EF8;"></i> Резерв</span>
+          <span><i class="sq" style="background:#FBBF24;"></i> Тех. обслуживание</span>
+          <span><i class="sq" style="background:rgba(120,150,220,.2);"></i> Свободно</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center justify-between mb16"><h3 class="h3">Последние события</h3><a href="admin-ops.html" class="muted" style="font-size:13px;text-decoration:none;">Все →</a></div>
+        <div class="alert-row"><span class="alert-dot" style="background:var(--warning);"></span><div><div style="color:#fff;font-size:14px;font-weight:600;">Узел node-07 · температура 79°C</div><div class="muted" style="font-size:12px;">Приближается к порогу · 12 мин назад</div></div></div>
+        <div class="alert-row"><span class="alert-dot" style="background:var(--brand-hi);"></span><div><div style="color:#fff;font-size:14px;font-weight:600;">Новая аренда · ТаджикТелеком</div><div class="muted" style="font-size:12px;">4× H200 · Offtake 1 год · 40 мин назад</div></div></div>
+        <div class="alert-row"><span class="alert-dot" style="background:var(--success);"></span><div><div style="color:#fff;font-size:14px;font-weight:600;">Обновление драйверов завершено</div><div class="muted" style="font-size:12px;">CUDA 12.4 · все узлы · 2 ч назад</div></div></div>
+        <div class="alert-row"><span class="alert-dot" style="background:var(--brand-hi);"></span><div><div style="color:#fff;font-size:14px;font-weight:600;">Счёт оплачен · Академия наук</div><div class="muted" style="font-size:12px;">$20 440 · Offtake · 3 ч назад</div></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// Build heatmap: 128 GPU cells (16 nodes x 8)
+(function(){
+  const el=document.getElementById('heat'); if(!el) return;
+  const colors=['#34D399','#2D7EF8','#FBBF24','rgba(120,150,220,.2)'];
+  // weighted: mostly running, some reserve, few maintenance, few free
+  const total=128; let cells=[];
+  for(let i=0;i<total;i++){
+    let r=Math.random();
+    let c = r<0.62?0 : r<0.80?1 : r<0.86?2 : 3;
+    cells.push(c);
+  }
+  el.innerHTML = cells.map(c=>`<i style="background:${colors[c]};"></i>`).join('');
+})();
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

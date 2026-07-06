@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darya.ai — Устойчивая AI-инфраструктура на «зелёной» энергии</title>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">darya<sup>ai</sup></a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Тарифы</a>
+      <a href="configurator.html">Конфигуратор</a>
+      <a href="zinda-card.html">Карта Zinda</a>
+      <a href="console.html">Консоль</a>
+      <a href="api.html">API</a>
+      <a href="index.html#tco">Стоимость</a>
+    </div>
+    <div class="nav-right">
+      <a href="register.html" class="btn btn-ghost btn-sm">Войти</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Начать бесплатно</a>
+    </div>
+  </div>
+</nav>
+
+<div class="app">
+<!-- HERO -->
+<header class="wrap" style="padding:80px 28px 40px; text-align:center;">
+  <span class="chip"><span class="dot-live"></span> Дата-центр в Таджикистане · «зелёная» гидроэнергия</span>
+  <h1 class="display mt24" style="max-width:960px; margin-left:auto; margin-right:auto;">
+    GPU-суперкомпьютер<br>для обучения и инференса AI
+  </h1>
+  <p class="lead mt24" style="max-width:680px; margin-left:auto; margin-right:auto;">
+    Аренда NVIDIA H200 по требованию или в резерв. Прозрачные тарифы,
+    оплата с баланса или через банк, доступ по API за 5 минут.
+  </p>
+  <div class="flex items-center gap16 mt32" style="justify-content:center;">
+    <a href="#tariffs" class="btn btn-primary btn-lg">Выбрать тариф</a>
+    <a href="configurator.html" class="btn btn-ghost btn-lg">Открыть конфигуратор</a>
+  </div>
+
+  <!-- Live GPU price strip -->
+  <div class="grid g4 mt56" style="max-width:940px; margin-left:auto; margin-right:auto; text-align:left;">
+    <div class="card">
+      <div class="muted" style="font-size:13px;">NVIDIA H200 SXM5</div>
+      <div class="stat-num" style="color:var(--brand-hi);">$5.00<span style="font-size:15px;color:var(--text-3);font-weight:600;">/GPU·ч</span></div>
+      <span class="badge ok mt8"><span class="dot-live"></span> В наличии</span>
+    </div>
+    <div class="card">
+      <div class="muted" style="font-size:13px;">Резерв (Reserved)</div>
+      <div class="stat-num" style="color:var(--brand-hi);">$4.20<span style="font-size:15px;color:var(--text-3);font-weight:600;">/GPU·ч</span></div>
+      <span class="badge info mt8">−16% к On-Demand</span>
+    </div>
+    <div class="card">
+      <div class="muted" style="font-size:13px;">Offtake (3 года)</div>
+      <div class="stat-num" style="color:var(--brand-hi);">$3.50<span style="font-size:15px;color:var(--text-3);font-weight:600;">/GPU·ч</span></div>
+      <span class="badge info mt8">−30% к On-Demand</span>
+    </div>
+    <div class="card">
+      <div class="muted" style="font-size:13px;">Трафик egress</div>
+      <div class="stat-num" style="color:var(--success);">$0</div>
+      <span class="badge ok mt8">Без платы за исходящий</span>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST BAR -->
+<section class="wrap" style="padding:24px 28px;">
+  <div class="card card-grid-bg flex items-center" style="justify-content:space-around; flex-wrap:wrap; gap:24px; padding:22px 28px;">
+    <div><span class="mono" style="color:var(--brand-hi);font-size:22px;font-weight:700;">8× H200</span><div class="muted" style="font-size:13px;">Supermicro SYS-821GE-TNHR</div></div>
+    <div class="divider" style="width:1px;height:44px;margin:0;"></div>
+    <div><span class="mono" style="color:var(--brand-hi);font-size:22px;font-weight:700;">1128 ГБ</span><div class="muted" style="font-size:13px;">HBM3e суммарно на узел</div></div>
+    <div class="divider" style="width:1px;height:44px;margin:0;"></div>
+    <div><span class="mono" style="color:var(--brand-hi);font-size:22px;font-weight:700;">3.2 Тбит/с</span><div class="muted" style="font-size:13px;">InfiniBand NDR</div></div>
+    <div class="divider" style="width:1px;height:44px;margin:0;"></div>
+    <div><span class="mono" style="color:var(--brand-hi);font-size:22px;font-weight:700;">100% ГЭС</span><div class="muted" style="font-size:13px;">возобновляемая энергия</div></div>
+  </div>
+</section>
+
+<!-- TARIFFS -->
+<section class="wrap" id="tariffs" style="padding:60px 28px 20px;">
+  <div class="center mb32">
+    <span class="eyebrow">Шаг 1 из 5 · Выбор тарифа</span>
+    <h2 class="h1 mt8">Три модели потребления</h2>
+    <p class="lead mt8" style="max-width:620px;margin:8px auto 0;">Начните с On-Demand без обязательств, сократите стоимость резервом или зафиксируйте цену на 3 года.</p>
+    <p class="muted mt16" style="display:inline-block;border:1px solid var(--warning,#FBBF24);border-radius:8px;padding:8px 16px;font-weight:600;color:var(--warning,#FBBF24);">⚠ Минимальный срок аренды — 100 часов. Аренда короче не предоставляется.</p>
+  </div>
+
+  <div class="grid g3">
+    <!-- On-Demand -->
+    <div class="opt" onclick="pick(this,'ondemand')" data-plan="ondemand">
+      <div class="tick"></div>
+      <span class="chip neutral">On-Demand</span>
+      <h3 class="h2 mt16">$5.00<span style="font-size:16px;color:var(--text-3);font-weight:600;"> /GPU·ч</span></h3>
+      <p class="muted mt8">Почасовая тарификация от 100 часов аренды. Платите за фактическое время работы. Идеально для экспериментов и пиковых нагрузок.</p>
+      <div class="divider"></div>
+      <ul style="list-style:none; color:var(--text-2); font-size:14px; display:grid; gap:10px;">
+        <li>✓ Запуск за минуты, без обязательств</li>
+        <li>✓ Весь сервер 8 GPU — $25 000 / мес</li>
+        <li>✓ $0 за исходящий трафик</li>
+        <li>✓ SLA доступности 99–95%</li>
+      </ul>
+      <a href="configurator.html?plan=ondemand" class="btn btn-ghost btn-block mt24">Настроить</a>
+    </div>
+
+    <!-- Reserved (featured) -->
+    <div class="opt sel" onclick="pick(this,'reserved')" data-plan="reserved" style="border-color:var(--brand);">
+      <div class="tick">✓</div>
+      <span class="chip">Reserved · популярный</span>
+      <h3 class="h2 mt16">$4.20<span style="font-size:16px;color:var(--text-3);font-weight:600;"> /GPU·ч</span></h3>
+      <p class="muted mt8">Резерв мощности на 1–12 месяцев со скидкой 16%. Гарантированная доступность GPU под ваши задачи обучения.</p>
+      <div class="divider"></div>
+      <ul style="list-style:none; color:var(--text-2); font-size:14px; display:grid; gap:10px;">
+        <li>✓ Экономия 16% к On-Demand</li>
+        <li>✓ Гарантированная ёмкость</li>
+        <li>✓ Приоритетная поддержка, SLA 99–95%</li>
+        <li>✓ Счёт-фактура / постоплата после KYB</li>
+      </ul>
+      <a href="configurator.html?plan=reserved" class="btn btn-primary btn-block mt24">Настроить</a>
+    </div>
+
+    <!-- Offtake -->
+    <div class="opt" onclick="pick(this,'offtake')" data-plan="offtake">
+      <div class="tick"></div>
+      <span class="chip neutral">Offtake</span>
+      <h3 class="h2 mt16">$3.50<span style="font-size:16px;color:var(--text-3);font-weight:600;"> /GPU·ч</span></h3>
+      <p class="muted mt8">Долгосрочный контракт на 1–3 года с фиксированной ценой и скидкой 30%. Для институциональных заказчиков и госпроектов.</p>
+      <div class="divider"></div>
+      <ul style="list-style:none; color:var(--text-2); font-size:14px; display:grid; gap:10px;">
+        <li>✓ Весь сервер 8 GPU — $20 440 / мес</li>
+        <li>✓ Выделенные узлы и сеть</li>
+        <li>✓ Индивидуальный SLA 99–95% и договор</li>
+        <li>✓ Оплата по договору с банком</li>
+      </ul>
+      <a href="register.html?plan=offtake" class="btn btn-ghost btn-block mt24">Связаться с отделом продаж</a>
+    </div>
+  </div>
+</section>
+
+<!-- TCO CALCULATOR -->
+<section class="wrap" id="tco" style="padding:50px 28px;">
+  <div class="card" style="padding:34px;">
+    <div class="grid g2" style="align-items:center;">
+      <div>
+        <span class="eyebrow">Калькулятор стоимости</span>
+        <h2 class="h2 mt8">Оцените затраты почасово — без обязательств</h2>
+        <p class="muted mt8">Выберите число GPU и часы — увидите оценку без egress-платы. Точный расчёт — в конфигураторе.</p>
+        <div class="mt24">
+          <label class="fld">Число GPU H200: <span class="mono" id="gpuVal" style="color:var(--brand-hi);">8</span></label>
+          <input type="range" min="1" max="8" value="8" id="gpuRange" style="width:100%;" oninput="calc()">
+        </div>
+        <div class="mt16">
+          <label class="fld">Часов в месяц: <span class="mono" id="hrVal" style="color:var(--brand-hi);">720</span></label>
+          <input type="range" min="100" max="720" value="720" step="20" id="hrRange" style="width:100%;" oninput="calc()">
+          <div class="muted mt8" style="font-size:12px;">Минимум — 100 часов аренды.</div>
+        </div>
+      </div>
+      <div class="card solid" style="text-align:center;">
+        <div class="muted" style="font-size:13px;">Ориентировочно при тарифе Reserved ($4.20/GPU·ч)</div>
+        <div class="stat-num mt8" style="color:var(--brand-hi);" id="tcoOut">$24 192</div>
+        <div class="muted mt8" style="font-size:13px;">в месяц · egress включён · $0 скрытых платежей</div>
+        <a href="configurator.html?plan=reserved" class="btn btn-primary mt24">Продолжить настройку</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap flex items-center justify-between" style="flex-wrap:wrap;gap:16px;">
+    <div><a href="index.html" class="logo" style="font-size:20px;">darya<sup>ai</sup></a><div class="muted mt8">ООО «Дарёи санаи марказ» · Душанбе, Таджикистан</div></div>
+    <div class="muted">Устойчивая AI-инфраструктура на «зелёной» гидроэнергии</div>
+  </div>
+</footer>
+</div>
+
+<script>
+function pick(el, plan){
+  document.querySelectorAll('.opt[data-plan]').forEach(o=>{o.classList.remove('sel'); o.querySelector('.tick').textContent='';});
+  el.classList.add('sel'); el.querySelector('.tick').textContent='✓';
+}
+function calc(){
+  const g=+document.getElementById('gpuRange').value, h=+document.getElementById('hrRange').value;
+  document.getElementById('gpuVal').textContent=g;
+  document.getElementById('hrVal').textContent=h;
+  const cost=g*h*4.20;
+  document.getElementById('tcoOut').textContent='$'+cost.toLocaleString('ru-RU').replace(/\s/g,'\u202f');
+}
+calc();
+</script>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
